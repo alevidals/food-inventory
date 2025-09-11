@@ -13,7 +13,9 @@ export function SignInForm() {
         <Label htmlFor="password">Contraseña</Label>
         <Input type="password" id="password" placeholder="Contraseña" />
       </div>
-      <Button type="submit">Iniciar Sesión</Button>
+      <Button type="submit" className="bg-violet-500">
+        Iniciar Sesión
+      </Button>
     </form>
   );
 }

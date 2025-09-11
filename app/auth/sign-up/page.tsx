@@ -4,7 +4,7 @@ import { SignUpForm } from "@/app/features/auth/components/sign-up-form";
 export default async function SignUp() {
   return (
     <main>
-      <h1 className="text-xl font-bold mb-4">
+      <h1 className="text-xl font-bold mb-4 text-violet-500 text-center">
         ¡Bienvenido al gestor de comidas!
       </h1>
       <SignUpForm />

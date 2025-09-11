@@ -1,24 +1,12 @@
-"use client";
-
-import type { JSX } from "react";
-import { Dashboard } from "@/app/features/dashboard/components/dashboard";
-import { History } from "@/app/features/history/components/history";
-import { Inventory } from "@/app/features/inventory/components/inventory";
-import { Meals } from "@/app/features/meals/components/meals";
+import { redirect } from "next/navigation";
+import { Main } from "@/app/shared/components/main";
 import { Navbar } from "@/app/shared/components/navbar";
-import { useActiveTab } from "@/app/shared/providers/active-tab-provider";
+import { getSession } from "@/app/shared/lib/auth";
 
-type ActiveTab = "dashboard" | "inventory" | "meals" | "history";
+export default async function Home() {
+  const session = await getSession();
 
-export default function Home() {
-  const { activeTab } = useActiveTab();
-
-  const CONTENT_MAPPER: Record<ActiveTab, JSX.Element> = {
-    dashboard: <Dashboard />,
-    inventory: <Inventory />,
-    history: <History />,
-    meals: <Meals />,
-  };
+  if (!session) redirect("/auth/sign-in");
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -27,9 +15,7 @@ export default function Home() {
           <h1>Gestión de dieta</h1>
         </div>
       </header>
-      <main className="flex-1 container mx-auto px-12 pt-4">
-        {CONTENT_MAPPER[activeTab]}
-      </main>
+      <Main />
       <Navbar />
     </div>
   );

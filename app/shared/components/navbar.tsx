@@ -1,3 +1,5 @@
+"use client";
+
 import { ChartColumn } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 import { Button } from "@/app/shared/components/ui/button";

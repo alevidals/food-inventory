@@ -28,6 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* TODO: move this provider to a separate layout component to only load this if user is signed-in */}
         <ActiveTabProvider>{children}</ActiveTabProvider>
       </body>
     </html>

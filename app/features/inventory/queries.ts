@@ -1,5 +1,6 @@
 "use server";
 
+import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import type {
   InsertInventoryItem,
@@ -59,5 +60,60 @@ export async function insertItemToInventory({
       .get();
   } catch (error) {
     console.error("Error adding item to inventory:", error);
+  }
+}
+
+type DeleteItemFromInventoryParams = {
+  id: InventoryItem["id"];
+};
+
+export async function deleteItemFromInventory({
+  id,
+}: DeleteItemFromInventoryParams) {
+  const session = await getSession();
+
+  if (!session) redirect("/auth/sign-in");
+
+  try {
+    const itemBelongsToUser = await belongsItemToUser({
+      id,
+      userId: session.user.id,
+    });
+
+    if (!itemBelongsToUser) {
+      throw new Error("Item does not belong to the user");
+    }
+
+    await db.delete(ingredientsSchema).where(eq(ingredientsSchema.id, id));
+
+    return true;
+  } catch (error) {
+    console.error("Error deleting item from inventory:", error);
+    return false;
+  }
+}
+
+type BelongsItemToUserParams = {
+  id: number;
+  userId: string;
+};
+
+export async function belongsItemToUser({
+  id,
+  userId,
+}: BelongsItemToUserParams) {
+  try {
+    const item = await db.query.ingredientsSchema.findFirst({
+      where: (ingredientsSchema, { eq, and }) =>
+        and(eq(ingredientsSchema.id, id), eq(ingredientsSchema.userId, userId)),
+      columns: {
+        id: true,
+      },
+    });
+
+    return !!item;
+  } catch (error) {
+    console.error("Error checking item ownership:", error);
+    return false;
   }
 }

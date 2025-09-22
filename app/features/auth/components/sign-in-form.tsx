@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { signInAction } from "@/app/features/auth/actions";
 import { FormItem } from "@/app/shared/components/form-item";
+import { LoadingButton } from "@/app/shared/components/loading-button";
 import { Button } from "@/app/shared/components/ui/button";
 
 export function SignInForm() {
@@ -33,9 +34,9 @@ export function SignInForm() {
         defaultValue={state?.data?.password}
         error={state?.errors?.password}
       />
-      <Button type="submit" disabled={isPending}>
+      <LoadingButton type="submit" isLoading={isPending}>
         Iniciar Sesión
-      </Button>
+      </LoadingButton>
     </form>
   );
 }

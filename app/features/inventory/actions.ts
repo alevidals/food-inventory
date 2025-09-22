@@ -1,12 +1,21 @@
 "use server";
 
 import z from "zod";
-import { insertItemToInventory } from "@/app/features/inventory/queries";
-import { insertInventorySchema } from "@/app/features/inventory/schema";
-import type { InsertInventoryItem } from "@/app/features/inventory/types";
+import {
+  deleteItemFromInventory,
+  insertItemToInventory,
+} from "@/app/features/inventory/queries";
+import {
+  deleteInventorySchema,
+  insertInventorySchema,
+} from "@/app/features/inventory/schema";
+import type {
+  DeleteInventoryItem,
+  InsertInventoryItem,
+} from "@/app/features/inventory/types";
 import type { ActionResponse } from "@/app/shared/types/action-response";
 
-export async function insertItemToIventoryAction(
+export async function insertItemToInventoryAction(
   _: unknown,
   formData: FormData,
 ): Promise<ActionResponse<InsertInventoryItem>> {
@@ -44,5 +53,38 @@ export async function insertItemToIventoryAction(
 
   return {
     success: true,
+  };
+}
+
+export async function deleteItemFromInventoryAction(
+  _: unknown,
+  formData: FormData,
+): Promise<ActionResponse<DeleteInventoryItem>> {
+  const data = Object.fromEntries(
+    formData.entries(),
+  ) as unknown as DeleteInventoryItem;
+
+  const result = deleteInventorySchema.safeParse(data);
+
+  if (!result.success) {
+    return {
+      success: false,
+      error: "Error al eliminar el elemento del inventario",
+    };
+  }
+
+  const deletedItem = await deleteItemFromInventory({ id: result.data.id });
+
+  if (!deletedItem) {
+    return {
+      success: false,
+      error: "Error al eliminar el elemento del inventario",
+      data: result.data,
+    };
+  }
+
+  return {
+    success: true,
+    message: "Elemento eliminado correctamente",
   };
 }

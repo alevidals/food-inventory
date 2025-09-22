@@ -1,7 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useActionState, useRef, useState } from "react";
-import { insertItemToIventoryAction } from "@/app/features/inventory/actions";
+import { insertItemToInventoryAction } from "@/app/features/inventory/actions";
 import { FormItem } from "@/app/shared/components/form-item";
+import { LoadingButton } from "@/app/shared/components/loading-button";
 import { Button } from "@/app/shared/components/ui/button";
 import {
   Dialog,
@@ -27,7 +28,7 @@ export function AddItemForm() {
 
   const [state, formAction, isPending] = useActionState(
     async (_: unknown, formData: FormData) => {
-      const response = await insertItemToIventoryAction(_, formData);
+      const response = await insertItemToInventoryAction(_, formData);
 
       if (response.success) {
         queryClient.invalidateQueries({ queryKey: ["inventory-items"] });
@@ -117,9 +118,9 @@ export function AddItemForm() {
             description="Cuando quede menos de este porcentaje se te avisará"
             error={state?.errors?.threshold}
           />
-          <Button type="submit" size="lg" disabled={isPending}>
+          <LoadingButton type="submit" size="lg" isLoading={isPending}>
             Añadir
-          </Button>
+          </LoadingButton>
         </form>
       </DialogContent>
     </Dialog>

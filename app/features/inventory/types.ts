@@ -9,3 +9,8 @@ export type InsertInventoryItem = Omit<
   typeof ingredientsSchema.$inferInsert,
   "userId" | "createdAt"
 >;
+
+export type DeleteInventoryItem = Pick<
+  typeof ingredientsSchema.$inferSelect,
+  "id"
+>;

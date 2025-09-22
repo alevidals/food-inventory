@@ -4,20 +4,28 @@ import { Badge } from "@/app/shared/components/ui/badge";
 import { Card, CardContent } from "@/app/shared/components/ui/card";
 import { cn } from "@/app/shared/lib/utils";
 
-type Props = InventoryItem;
+type Props = InventoryItem & { index?: number };
 
-export function InventoryCard({ name, quantity, threshold, unityType }: Props) {
+export function InventoryCard({
+  name,
+  quantity,
+  threshold,
+  unityType,
+  index = 0,
+}: Props) {
   const isLowStock = quantity <= threshold;
   const cardClassName = cn(
     "border-2",
     isLowStock && "border border-destructive",
   );
 
+  const delay = 0.05 * index;
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95, y: 8 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      transition={{ duration: 0.25, ease: "easeOut", delay }}
     >
       <Card className={cardClassName}>
         <CardContent>

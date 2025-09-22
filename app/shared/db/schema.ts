@@ -89,6 +89,9 @@ export const ingredientsSchema = sqliteTable("ingredients", {
     enum: ["gr", "kg", "ml", "l", "unit"],
   }).notNull(),
   threshold: integer("threshold").notNull().default(0),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .default(sql`(current_timestamp)`)
+    .notNull(),
   userId: text("user_id")
     .notNull()
     .references(() => usersSchema.id),

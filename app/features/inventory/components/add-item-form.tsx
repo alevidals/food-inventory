@@ -1,7 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useActionState, useRef, useState } from "react";
 import { insertItemToIventoryAction } from "@/app/features/inventory/actions";
-import type { InventoryItem } from "@/app/features/inventory/types";
 import { FormItem } from "@/app/shared/components/form-item";
 import { Button } from "@/app/shared/components/ui/button";
 import {
@@ -31,14 +30,7 @@ export function AddItemForm() {
       const response = await insertItemToIventoryAction(_, formData);
 
       if (response.success) {
-        if (response.data) {
-          queryClient.setQueryData(
-            ["inventory-items"],
-            (oldData: InventoryItem[] | undefined) => {
-              return [...(oldData ?? []), response.data as InventoryItem];
-            },
-          );
-        }
+        queryClient.invalidateQueries({ queryKey: ["inventory-items"] });
         formRef.current?.reset();
         setIsOpen(false);
       }
@@ -76,11 +68,8 @@ export function AddItemForm() {
             label="Nombre del alimento"
             name="name"
             id="name"
-            defaultValue={
-              state?.success
-                ? undefined
-                : (state?.data?.name as string | undefined)
-            }
+            required
+            defaultValue={state?.data?.name}
             error={state?.success ? undefined : state?.errors?.name}
           />
           <FormItem
@@ -88,21 +77,19 @@ export function AddItemForm() {
             name="quantity"
             id="quantity"
             type="number"
-            defaultValue={
-              state?.success
-                ? undefined
-                : (state?.data?.quantity as number | undefined)
-            }
+            required
+            defaultValue={state?.data?.quantity}
             error={state?.errors?.quantity}
           />
           <div className="grid w-full items-center gap-3">
             <Label htmlFor="unityType">Unidad</Label>
             <Select
+              key={state?.success ? "reset" : "stable"}
               name="unityType"
               defaultValue={
                 state?.success
-                  ? undefined
-                  : (state?.data?.unityType as string | undefined)
+                  ? "gr"
+                  : ((state?.data?.unityType as string | undefined) ?? "gr")
               }
             >
               <SelectTrigger
@@ -132,7 +119,7 @@ export function AddItemForm() {
             min={0}
             max={100}
             description="Cuando quede menos de este porcentaje se te avisará"
-            error={state?.success ? undefined : state?.errors?.threshold}
+            error={state?.errors?.threshold}
           />
           <Button
             type="submit"

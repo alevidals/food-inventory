@@ -44,6 +44,5 @@ export async function insertItemToIventoryAction(
 
   return {
     success: true,
-    data: insertedItem,
   };
 }

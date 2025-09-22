@@ -25,6 +25,9 @@ export async function getInventoryItems(): Promise<InventoryItem[]> {
       },
       where: (ingredientsSchema, { eq }) =>
         eq(ingredientsSchema.userId, session.user.id),
+      orderBy: (ingredientsSchema, { desc }) => [
+        desc(ingredientsSchema.createdAt),
+      ],
     });
 
     return items;

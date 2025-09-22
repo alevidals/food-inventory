@@ -2,7 +2,11 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { existsUserQuery, signInQuery, signUpQuery } from "@/app/features/auth/queries";
+import {
+  existsUserQuery,
+  signInQuery,
+  signUpQuery,
+} from "@/app/features/auth/queries";
 import { signInSchema, signUpSchema } from "@/app/features/auth/schemas";
 import type { SignInType, SignUpType } from "@/app/features/auth/types";
 import type { ActionResponse } from "@/app/shared/types/action-response";

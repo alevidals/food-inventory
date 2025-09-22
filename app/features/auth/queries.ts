@@ -3,13 +3,13 @@ import { auth } from "@/app/shared/lib/auth";
 
 type ExistsUserParams = {
   email: string;
-}
+};
 
 export async function existsUserQuery({ email }: ExistsUserParams) {
   try {
     const data = await db.query.usersSchema.findFirst({
       where: (usersSchema, { eq }) => eq(usersSchema.email, email),
-    })
+    });
 
     return !!data;
   } catch (error) {

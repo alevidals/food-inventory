@@ -85,18 +85,18 @@ export const ingredientsSchema = sqliteTable("ingredients", {
     length: 256,
   }).notNull(),
   quantity: integer("quantity").notNull().default(0),
-  unity_type: text("unity_type", {
+  unityType: text("unity_type", {
     enum: ["gr", "kg", "ml", "l", "unit"],
-  }),
+  }).notNull(),
   threshold: integer("threshold").notNull().default(0),
-  user_id: text("user_id")
+  userId: text("user_id")
     .notNull()
     .references(() => usersSchema.id),
 });
 
 export const ingredientsRelations = relations(ingredientsSchema, ({ one }) => ({
   user: one(usersSchema, {
-    fields: [ingredientsSchema.user_id],
+    fields: [ingredientsSchema.userId],
     references: [usersSchema.id],
   }),
 }));
@@ -113,14 +113,14 @@ export const mealsSchema = sqliteTable("meals", {
   type: text("type", {
     enum: ["breakfast", "lunch", "dinner", "snack"],
   }).notNull(),
-  user_id: text("user_id")
+  userId: text("user_id")
     .notNull()
     .references(() => usersSchema.id),
 });
 
 export const mealsRelations = relations(mealsSchema, ({ one }) => ({
   user: one(usersSchema, {
-    fields: [mealsSchema.user_id],
+    fields: [mealsSchema.userId],
     references: [usersSchema.id],
   }),
 }));
@@ -131,10 +131,10 @@ export const mealsRelations = relations(mealsSchema, ({ one }) => ({
 
 export const mealIngredientsSchema = sqliteTable("meal_ingredients", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  meal_id: integer("meal_id")
+  mealId: integer("meal_id")
     .notNull()
     .references(() => mealsSchema.id),
-  ingredient_id: integer("ingredient_id")
+  ingredientId: integer("ingredient_id")
     .notNull()
     .references(() => ingredientsSchema.id),
   quantity: integer("quantity").notNull().default(1),
@@ -144,11 +144,11 @@ export const mealIngredientsRelations = relations(
   mealIngredientsSchema,
   ({ one }) => ({
     meal: one(mealsSchema, {
-      fields: [mealIngredientsSchema.meal_id],
+      fields: [mealIngredientsSchema.mealId],
       references: [mealsSchema.id],
     }),
     ingredient: one(ingredientsSchema, {
-      fields: [mealIngredientsSchema.ingredient_id],
+      fields: [mealIngredientsSchema.ingredientId],
       references: [ingredientsSchema.id],
     }),
   }),
@@ -165,10 +165,10 @@ export const mealLogsSchema = sqliteTable("meal_logs", {
   })
     .notNull()
     .default(sql`(current_timestamp)`),
-  meal_id: integer("meal_id")
+  mealId: integer("meal_id")
     .notNull()
     .references(() => mealsSchema.id),
-  user_id: text("user_id")
+  userId: text("user_id")
     .notNull()
     .references(() => usersSchema.id),
 });

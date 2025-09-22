@@ -17,8 +17,7 @@ export const signUpSchema = z
     path: ["confirmPassword"],
   });
 
-
 export const signInSchema = z.object({
   email: z.email("El email no es válido"),
-  password: z.string()
+  password: z.string(),
 });

@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "9a2a2bfb-463a-4593-9ce2-fee2607c2610",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "d35bd97f-ff3a-4087-b371-cb3fd5378e69",
+  "prevId": "9a2a2bfb-463a-4593-9ce2-fee2607c2610",
   "tables": {
     "accounts": {
       "name": "accounts",
@@ -145,7 +145,7 @@
           "name": "unity_type",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "threshold": {

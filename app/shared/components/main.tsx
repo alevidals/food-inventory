@@ -19,8 +19,6 @@ export function Main() {
   };
 
   return (
-    <main className="flex-1 container mx-auto pt-4">
-      {CONTENT_MAPPER[activeTab]}
-    </main>
+    <main className="container mx-auto py-4">{CONTENT_MAPPER[activeTab]}</main>
   );
 }

@@ -9,13 +9,15 @@ export default async function Home() {
   if (!session) redirect("/auth/sign-in");
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="flex items-center h-16 bg-violet-400 border-b border-b-violet-500 px-12">
+    <div className="h-dvh flex flex-col">
+      <header className="flex items-center h-16 bg-violet-400 border-b border-b-violet-500 px-12 shrink-0">
         <div className="container mx-auto">
           <h1>Gestión de dieta</h1>
         </div>
       </header>
-      <Main />
+      <div className="flex-1 overflow-y-scroll">
+        <Main />
+      </div>
       <Navbar />
     </div>
   );

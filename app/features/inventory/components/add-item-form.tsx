@@ -37,17 +37,13 @@ export function AddItemForm() {
 
       return response;
     },
-    null,
+    null
   );
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          type="button"
-          className="bg-violet-500 hover:bg-violet-700"
-          size="lg"
-        >
+        <Button type="button" size="lg">
           Añadir ítem
         </Button>
       </DialogTrigger>
@@ -89,7 +85,7 @@ export function AddItemForm() {
               defaultValue={
                 state?.success
                   ? "gr"
-                  : ((state?.data?.unityType as string | undefined) ?? "gr")
+                  : (state?.data?.unityType as string | undefined) ?? "gr"
               }
             >
               <SelectTrigger
@@ -115,18 +111,13 @@ export function AddItemForm() {
             label="Umbral de stock bajo"
             name="threshold"
             type="number"
-            defaultValue={state?.success ? 20 : (state?.data?.threshold ?? 20)}
+            defaultValue={state?.success ? 20 : state?.data?.threshold ?? 20}
             min={0}
             max={100}
             description="Cuando quede menos de este porcentaje se te avisará"
             error={state?.errors?.threshold}
           />
-          <Button
-            type="submit"
-            className="bg-violet-500 hover:bg-violet-700"
-            size="lg"
-            disabled={isPending}
-          >
+          <Button type="submit" size="lg" disabled={isPending}>
             Añadir
           </Button>
         </form>

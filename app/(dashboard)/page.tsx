@@ -10,7 +10,7 @@ export default async function Home() {
 
   return (
     <div className="h-dvh flex flex-col">
-      <header className="flex items-center h-16 bg-violet-400 border-b border-b-violet-500 px-12 shrink-0">
+      <header className="flex items-center h-16 bg-primary/70 border-b border-b-primary px-12 shrink-0">
         <div className="container mx-auto">
           <h1>Gestión de dieta</h1>
         </div>

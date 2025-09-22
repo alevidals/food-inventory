@@ -33,7 +33,7 @@ export function SignInForm() {
         defaultValue={state?.data?.password}
         error={state?.errors?.password}
       />
-      <Button type="submit" className="bg-violet-500" disabled={isPending}>
+      <Button type="submit" disabled={isPending}>
         Iniciar Sesión
       </Button>
     </form>

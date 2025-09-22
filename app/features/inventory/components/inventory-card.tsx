@@ -15,8 +15,10 @@ export function InventoryCard({
 }: Props) {
   const isLowStock = quantity <= threshold;
   const cardClassName = cn(
-    "border-2",
-    isLowStock && "border border-destructive",
+    "border shadow-sm transition-colors transition-shadow duration-200 hover:shadow-md",
+    isLowStock
+      ? "border-destructive/70 bg-destructive/5 hover:border-destructive"
+      : "border-primary/60 bg-primary/5 hover:border-primary hover:bg-primary/10"
   );
 
   const delay = 0.05 * index;
@@ -29,7 +31,15 @@ export function InventoryCard({
     >
       <Card className={cardClassName}>
         <CardContent>
-          <h3 className="font-semibold text-lg">{name}</h3>
+          <h3
+            className={cn(
+              "font-semibold text-lg",
+              !isLowStock && "text-primary",
+              isLowStock && "text-destructive"
+            )}
+          >
+            {name}
+          </h3>
           <div className="flex items-center gap-4 mt-1">
             <span className="text-lg font-bold text-foreground">
               {quantity} {unityType}

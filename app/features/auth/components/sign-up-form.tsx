@@ -51,7 +51,7 @@ export function SignUpForm() {
         defaultValue={state?.data?.confirmPassword}
         error={state?.errors?.confirmPassword}
       />
-      <Button type="submit" className="bg-violet-500" disabled={isPending}>
+      <Button type="submit" disabled={isPending}>
         Registrarse
       </Button>
     </form>

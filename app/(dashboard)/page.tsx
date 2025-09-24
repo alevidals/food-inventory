@@ -15,7 +15,7 @@ export default async function Home() {
           <h1>Gestión de dieta</h1>
         </div>
       </header>
-      <div className="flex-1 overflow-y-scroll">
+      <div className="flex-1 overflow-y-auto">
         <Main />
       </div>
       <Navbar />

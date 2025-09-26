@@ -60,6 +60,8 @@ export async function insertItemToInventory({
       .get();
   } catch (error) {
     console.error("Error adding item to inventory:", error);
+
+    return null;
   }
 }
 
@@ -90,6 +92,42 @@ export async function deleteItemFromInventory({
   } catch (error) {
     console.error("Error deleting item from inventory:", error);
     return false;
+  }
+}
+
+type UpdateInventoryItemParams = {
+  id: InventoryItem["id"];
+  item: Partial<InventoryItem>;
+};
+
+export async function updateInventoryItem({
+  id,
+  item,
+}: UpdateInventoryItemParams) {
+  const session = await getSession();
+
+  if (!session) redirect("/auth/sign-in");
+
+  try {
+    const itemBelongsToUser = await belongsItemToUser({
+      id,
+      userId: session.user.id,
+    });
+
+    if (!itemBelongsToUser) {
+      throw new Error("Item does not belong to the user");
+    }
+
+    return await db
+      .update(ingredientsSchema)
+      .set(item)
+      .where(eq(ingredientsSchema.id, id))
+      .returning()
+      .get();
+  } catch (error) {
+    console.error("Error updating inventory item:", error);
+
+    return null;
   }
 }
 

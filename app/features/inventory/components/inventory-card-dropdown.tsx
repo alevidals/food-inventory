@@ -2,8 +2,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { deleteItemFromInventoryAction } from "@/app/features/inventory/actions";
+import { AddItemForm } from "@/app/features/inventory/components/add-item-form";
 import type { InventoryItem } from "@/app/features/inventory/types";
 import { formatUnit } from "@/app/features/inventory/utils";
+import { ResponsiveAddDialog } from "@/app/shared/components/responsive-add-dialog";
 import { ResponsiveDeleteDialog } from "@/app/shared/components/responsive-delete-dialog";
 import { Button } from "@/app/shared/components/ui/button";
 import {
@@ -21,6 +23,7 @@ export function InventoryCardDropdown({ item }: Props) {
   const { id, name, quantity, unityType } = item;
 
   const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
   const queryClient = useQueryClient();
 
   const unityTypeLabel = formatUnit({ unityType });
@@ -39,7 +42,7 @@ export function InventoryCardDropdown({ item }: Props) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" sideOffset={8}>
-          <DropdownMenuItem onSelect={() => alert("editar")}>
+          <DropdownMenuItem onSelect={() => setIsOpenEdit(true)}>
             Editar
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -62,6 +65,18 @@ export function InventoryCardDropdown({ item }: Props) {
           queryClient.invalidateQueries({ queryKey: ["inventory-items"] })
         }
       />
+      <ResponsiveAddDialog
+        isOpen={isOpenEdit}
+        setIsOpen={setIsOpenEdit}
+        type="edit"
+      >
+        <AddItemForm
+          item={item}
+          onSave={() => {
+            setIsOpenEdit(false);
+          }}
+        />
+      </ResponsiveAddDialog>
     </>
   );
 }

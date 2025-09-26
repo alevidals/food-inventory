@@ -14,3 +14,7 @@ export type DeleteInventoryItem = Pick<
   typeof ingredientsSchema.$inferSelect,
   "id"
 >;
+
+export type UpdateInventoryItem = Partial<InventoryItem> & {
+  id: InventoryItem["id"];
+};

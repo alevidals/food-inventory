@@ -10,7 +10,7 @@ export function Navbar() {
   const { activeTab, setActiveTab } = useActiveTab();
 
   return (
-    <nav className="h-24 bg-primary/10 border-t border-t-primary/30 flex items-center justify-center gap-8">
+    <nav className="bg-primary/10 flex items-center justify-center gap-8 w-fit mx-auto p-2 rounded-xl mb-4 border border-primary">
       <NavButton
         isActive={activeTab === "dashboard"}
         onClick={() => setActiveTab("dashboard")}
@@ -54,11 +54,10 @@ function NavButton({
       {...rest}
       variant={isActive ? "default" : "ghost"}
       className={cn(
-        "flex gap-2 h-auto p-4 w-fit rounded-xl select-none",
+        "flex flex-col h-full",
         !isActive && "hover:bg-primary/20",
-        isActive && "bg-primary hover:bg-primary"
+        isActive && "bg-primary hover:bg-primary",
       )}
-      size="lg"
     />
   );
 }

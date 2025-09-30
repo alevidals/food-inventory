@@ -19,36 +19,20 @@ CREATE TABLE `ingredients` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`name` text(256) NOT NULL,
 	`quantity` integer DEFAULT 0 NOT NULL,
-	`unity_type` text,
+	`unity_type` text NOT NULL,
 	`threshold` integer DEFAULT 0 NOT NULL,
+	`created_at` integer DEFAULT (current_timestamp) NOT NULL,
 	`user_id` text NOT NULL,
 	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `meal_ingredients` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`meal_id` integer NOT NULL,
-	`ingredient_id` integer NOT NULL,
-	`quantity` integer DEFAULT 1 NOT NULL,
-	FOREIGN KEY (`meal_id`) REFERENCES `meals`(`id`) ON UPDATE no action ON DELETE no action,
-	FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients`(`id`) ON UPDATE no action ON DELETE no action
-);
---> statement-breakpoint
-CREATE TABLE `meal_logs` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`date` integer DEFAULT (current_timestamp) NOT NULL,
-	`meal_id` integer NOT NULL,
-	`user_id` text NOT NULL,
-	FOREIGN KEY (`meal_id`) REFERENCES `meals`(`id`) ON UPDATE no action ON DELETE no action,
-	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
-);
---> statement-breakpoint
-CREATE TABLE `meals` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`name` text(256) NOT NULL,
 	`type` text NOT NULL,
-	`user_id` text NOT NULL,
-	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+	`ingredient_id` integer NOT NULL,
+	`quantity` integer DEFAULT 1 NOT NULL,
+	FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `sessions` (

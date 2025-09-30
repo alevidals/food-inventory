@@ -108,7 +108,31 @@ export const ingredientsRelations = relations(ingredientsSchema, ({ one }) => ({
 // MEALS
 // --------------
 
-export const mealsSchema = sqliteTable("meals", {
+// export const mealsSchema = sqliteTable("meals", {
+//   id: integer("id").primaryKey({ autoIncrement: true }),
+//   name: text("name", {
+//     length: 256,
+//   }).notNull(),
+//   type: text("type", {
+//     enum: ["breakfast", "lunch", "dinner", "snack"],
+//   }).notNull(),
+//   userId: text("user_id")
+//     .notNull()
+//     .references(() => usersSchema.id),
+// });
+
+// export const mealsRelations = relations(mealsSchema, ({ one }) => ({
+//   user: one(usersSchema, {
+//     fields: [mealsSchema.userId],
+//     references: [usersSchema.id],
+//   }),
+// }));
+
+// --------------
+// MEAL_INGREDIENTS
+// --------------
+
+export const mealsSchema = sqliteTable("meal_ingredients", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name", {
     length: 256,
@@ -116,6 +140,10 @@ export const mealsSchema = sqliteTable("meals", {
   type: text("type", {
     enum: ["breakfast", "lunch", "dinner", "snack"],
   }).notNull(),
+  ingredientId: integer("ingredient_id")
+    .notNull()
+    .references(() => ingredientsSchema.id),
+  quantity: integer("quantity").notNull().default(1),
   userId: text("user_id")
     .notNull()
     .references(() => usersSchema.id),
@@ -126,52 +154,27 @@ export const mealsRelations = relations(mealsSchema, ({ one }) => ({
     fields: [mealsSchema.userId],
     references: [usersSchema.id],
   }),
-}));
-
-// --------------
-// MEAL_INGREDIENTS
-// --------------
-
-export const mealIngredientsSchema = sqliteTable("meal_ingredients", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  mealId: integer("meal_id")
-    .notNull()
-    .references(() => mealsSchema.id),
-  ingredientId: integer("ingredient_id")
-    .notNull()
-    .references(() => ingredientsSchema.id),
-  quantity: integer("quantity").notNull().default(1),
-});
-
-export const mealIngredientsRelations = relations(
-  mealIngredientsSchema,
-  ({ one }) => ({
-    meal: one(mealsSchema, {
-      fields: [mealIngredientsSchema.mealId],
-      references: [mealsSchema.id],
-    }),
-    ingredient: one(ingredientsSchema, {
-      fields: [mealIngredientsSchema.ingredientId],
-      references: [ingredientsSchema.id],
-    }),
+  ingredient: one(ingredientsSchema, {
+    fields: [mealsSchema.ingredientId],
+    references: [ingredientsSchema.id],
   }),
-);
+}));
 
 // --------------
 // MEAL_LOGS
 // --------------
 
-export const mealLogsSchema = sqliteTable("meal_logs", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  date: integer("date", {
-    mode: "timestamp",
-  })
-    .notNull()
-    .default(sql`(current_timestamp)`),
-  mealId: integer("meal_id")
-    .notNull()
-    .references(() => mealsSchema.id),
-  userId: text("user_id")
-    .notNull()
-    .references(() => usersSchema.id),
-});
+// export const mealLogsSchema = sqliteTable("meal_logs", {
+//   id: integer("id").primaryKey({ autoIncrement: true }),
+//   date: integer("date", {
+//     mode: "timestamp",
+//   })
+//     .notNull()
+//     .default(sql`(current_timestamp)`),
+//   mealId: integer("meal_id")
+//     .notNull()
+//     .references(() => mealsSchema.id),
+//   userId: text("user_id")
+//     .notNull()
+//     .references(() => usersSchema.id),
+// });

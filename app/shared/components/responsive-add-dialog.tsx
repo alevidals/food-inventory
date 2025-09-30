@@ -53,8 +53,8 @@ export function ResponsiveAddDialog({
   const finalDescription = description
     ? description
     : type === "edit"
-      ? "Aquí puedes editar un ítem de tu inventario."
-      : "Aquí puedes añadir un nuevo ítem a tu inventario.";
+      ? "Aquí puedes editar un ítem."
+      : "Aquí puedes añadir un nuevo ítem.";
 
   if (isDesktop) {
     return (

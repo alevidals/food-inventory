@@ -5,22 +5,15 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1757769347492,
-      "tag": "0000_wise_firestar",
+      "when": 1759251766661,
+      "tag": "0000_normal_gamma_corps",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "6",
-      "when": 1757793296179,
-      "tag": "0001_talented_pyro",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1758568148060,
-      "tag": "0002_complete_speed",
+      "when": 1759252013541,
+      "tag": "0001_loose_triton",
       "breakpoints": true
     }
   ]
